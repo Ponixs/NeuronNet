@@ -1,6 +1,7 @@
 import tkinter as tk
 from .NeuroNet import NeuralNetworkWindow
-constWidth = 128
+import os
+from dotenv import load_dotenv
 
 
 class DrawingApp:
@@ -8,6 +9,9 @@ class DrawingApp:
         self.master = master
         self.master.title("Drawing Application")
         self.master.geometry("512x512")  # Set window size to 512x512 pixels
+
+        load_dotenv()
+        const_width = os.getenv('const_width')
 
         # Center the window on the screen
         window_width = 512
@@ -25,7 +29,7 @@ class DrawingApp:
         frame.pack(expand=True)  # Расширяем фрейм, чтобы занять доступное пространство
 
         # Canvas для рисования
-        self.canvas = tk.Canvas(frame, width=constWidth, height=constWidth, bg='white')
+        self.canvas = tk.Canvas(frame, width=const_width, height=const_width, bg='white')
         self.canvas.pack(padx=16, pady=16)  # Добавляем отступы для эстетики
         self.canvas.bind("<B1-Motion>", self.paint)
 
@@ -53,5 +57,3 @@ class DrawingApp:
 
     def open_neural_network_window(self):
         NeuralNetworkWindow(self.master)
-
-
