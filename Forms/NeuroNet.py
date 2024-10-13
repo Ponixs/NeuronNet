@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox, Toplevel
 
-from Service import main
+from Service import train
 
 class NeuralNetworkWindow:
     def __init__(self, master):
@@ -25,10 +25,10 @@ class NeuralNetworkWindow:
         self.epochs_entry.pack(side='left')
 
         # Buttons for learning processes
-        learn_new_button = tk.Button(self.learning_frame, text="Learn from Scratch", command=self.learn_from_scratch)
+        learn_new_button = tk.Button(self.learning_frame, text="Train from Scratch", command=self.train_from_scratch)
         learn_new_button.pack(side='left', padx=5)
 
-        learn_button = tk.Button(self.learning_frame, text="Learn", command=self.learn)
+        learn_button = tk.Button(self.learning_frame, text="Retrain", command=self.retrain)
         learn_button.pack(side='left', padx=5)
 
         # Output scales button
@@ -42,19 +42,19 @@ class NeuralNetworkWindow:
         show_weights_button = tk.Button(self.actions_frame, text="Show Weights", command=self.show_weights)
         show_weights_button.pack(side='left', padx=5)
 
-    def learn_from_scratch(self):
+    def train_from_scratch(self):
         if self.confirm_action("Are you sure you want to start learning from scratch?"):
             epochs = self.get_epochs()
             if epochs is not None:
                 print(f"Learning from scratch for {epochs} epochs.")
-                main(epochs, True)
+                train(epochs, True)
 
-    def learn(self):
+    def retrain(self):
         if self.confirm_action("Are you sure you want to start learning without zeroing weights?"):
             epochs = self.get_epochs()
             if epochs is not None:
                 print(f"Learning for {epochs} epochs without zeroing weights.")
-                main(epochs, False)
+                train(epochs, False)
 
 
     def get_epochs(self):
