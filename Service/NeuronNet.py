@@ -1,21 +1,31 @@
-from .Softmax import softmax
-from .NetLay import net_lay
+import numpy as np
+
+from Auxiliary.Softmax import softmax
+from Auxiliary.NetLay import net_lay
 from .CRUD_files import read_scales_to_matrix
 
 
-def neuron_net(layer_matrices, scales_index):
+def neuron_net(one_layer, scales_index):
+    # layer_matrices = pd.DataFrame()
+    layer_arr = np.empty((scales_index + 1,), dtype=object)
     for j in range(1, scales_index + 1):
 
         file_path = f'scales_{j}.csv'
         scales_matrix = read_scales_to_matrix(file_path)
 
         if scales_matrix is not None:
-            layer_matrices = net_lay(layer_matrices, scales_matrix)
+            one_layer = net_lay(one_layer, scales_matrix)
+
+            layer_arr[j-1] = np.array(one_layer.to_numpy(), dtype=float, )
+            # new_row = pd.DataFrame(one_layer)
+            # layer_matrices = pd.concat([layer_matrices, new_row.T], ignore_index=True)
         else:
             print("Error: No file with neuron weights")
 
     scales_matrix = read_scales_to_matrix('scales_end.csv')
-    layer_matrices = net_lay(layer_matrices, scales_matrix, True)
+    one_layer = net_lay(one_layer, scales_matrix, True)
+    layer_arr[scales_index] = np.array(one_layer.to_numpy(), dtype=float, )
+    result = softmax(one_layer)
+    print(len(layer_arr[0]))
 
-    result = softmax(layer_matrices)
-    return result
+    return result, layer_arr
