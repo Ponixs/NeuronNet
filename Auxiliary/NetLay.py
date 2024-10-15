@@ -13,7 +13,7 @@ def net_lay(img_matrix: pd.DataFrame, scales_matrix: pd.DataFrame, scale_end: bo
         var = var.sum()
         if not scale_end:
             var = sigmoid(var)
-        arr.append(var)
+        arr.append(round(var, 4))
     y = pd.DataFrame(arr)
 
     return y.T.iloc[0]

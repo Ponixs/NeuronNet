@@ -90,5 +90,5 @@ if __name__ == '__main__':
     path = 'C:/Users/vlad/Desktop/kms_and other_trash/sucs dicks/7Semestr/ОМО/Messendger/'
     input_path = 'C:/Users/vlad/Desktop/kms_and other_trash/sucs dicks/7Semestr/ОМО/Messendger/alldata.csv'
     mixed(input_path, input_path)
-    shuffle_and_split_csv(input_path, 'test.csv', 'training.csv')
+    shuffle_and_split_csv(input_path, '../Files/test.csv', '../Files/training.csv')
 

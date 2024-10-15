@@ -7,7 +7,7 @@ from .CRUD_files import *
 
 
 def train(epochs, res_the_scales=False):
-    img_matrix = read_img_to_matrix('./Files/alldata.csv')
+    img_matrix = read_img_to_matrix('./Files/training.csv')
 
     load_dotenv()
     const_width = int(os.getenv('const_width'))
@@ -31,8 +31,9 @@ def train(epochs, res_the_scales=False):
                 layer_matrices = img_matrix[0].iloc[i]
                 layer_matrices = neuron_net(layer_matrices, scales_index)[1]
 
-                true_answer = img_matrix[1][i][0]
+                true_answer = img_matrix[1][i][0] - 1
                 back_propagation(layer_matrices, true_answer)
+        print(f"Later {epochs} epochs.")
 
 
 

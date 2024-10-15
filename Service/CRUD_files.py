@@ -1,9 +1,11 @@
+import os
 import pandas as pd
 import csv
 import random
+from dotenv import load_dotenv
 
-path_scales = './Files/scales/'
-
+load_dotenv()
+path_scales = os.getenv('path_scales')
 def read_img_to_matrix(file_path, delimiter=';'):
     with open(file_path, 'r') as file:
         # Read lines, split by delimiter, and convert to float
@@ -42,6 +44,8 @@ def create_scales_file(file_name, num_rows, num_columns):
 
 
 def write_scales_to_file(scale, file_name):
-    with open(path_scales + file_name,  mode='w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerows(scale)
+    if isinstance(scale, pd.DataFrame):
+        scale = scale.iloc[1:]
+        scale.to_csv(path_scales + file_name, index=False, sep=';')
+    else:
+        raise ValueError("scale должен быть экземпляром pandas DataFrame")
