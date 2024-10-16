@@ -41,6 +41,7 @@ def create_scales_file(file_name, num_rows, num_columns):
         for _ in range(num_rows):
             row = [f"{random.uniform(-1, 1):.4f}" for _ in range(num_columns)]
             writer.writerow([';'.join(row)])
+    return True
 
 
 def write_scales_to_file(scale, file_name):
@@ -49,3 +50,9 @@ def write_scales_to_file(scale, file_name):
         scale.to_csv(path_scales + file_name, index=False, sep=';')
     else:
         raise ValueError("scale должен быть экземпляром pandas DataFrame")
+
+def write_arr_to_file(arr, file_name):
+    with open(file_name, mode='w', newline='') as file:
+        writer = csv.writer(file, delimiter=';')
+        writer.writerow(arr)
+    return True
