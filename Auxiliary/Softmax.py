@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
 
-def softmax(series):
 
+def softmax(series):
     exp_values = np.exp(series - np.max(series))  # для предотвращения переполнения
     return exp_values / exp_values.sum()
 

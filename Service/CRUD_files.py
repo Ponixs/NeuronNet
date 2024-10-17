@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 path_scales = os.getenv('path_scales')
+
+
 def read_img_to_matrix(file_path, delimiter=';'):
     with open(file_path, 'r') as file:
         # Read lines, split by delimiter, and convert to float
@@ -51,8 +53,9 @@ def write_scales_to_file(scale, file_name):
     else:
         raise ValueError("scale должен быть экземпляром pandas DataFrame")
 
+
 def write_arr_to_file(arr, file_name):
-    with open(file_name, mode='w', newline='') as file:
+    with open(file_name, mode='a', newline='') as file:
         writer = csv.writer(file, delimiter=';')
         writer.writerow(arr)
     return True

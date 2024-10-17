@@ -8,7 +8,7 @@ class DrawingApp:
     def __init__(self, master):
         self.master = master
         self.master.title("Drawing Application")
-        self.master.geometry("512x512")  # Set window size to 512x512 pixels
+        self.master.geometry("400x300")  # Set window size to 512x512 pixels
 
         load_dotenv()
         const_width = os.getenv('const_width')

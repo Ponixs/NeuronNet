@@ -1,6 +1,6 @@
 import pandas as pd
 
-from Auxiliary.Sigmoid import sigmoid
+from .Sigmoid import sigmoid
 
 
 def net_lay(img_matrix: pd.DataFrame, scales_matrix: pd.DataFrame, scale_end: bool = False) -> pd.DataFrame:

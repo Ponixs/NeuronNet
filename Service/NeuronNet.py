@@ -1,7 +1,6 @@
 import numpy as np
 
-from Auxiliary.Softmax import softmax
-from Auxiliary.NetLay import net_lay
+from Auxiliary import softmax, net_lay
 from .CRUD_files import read_scales_to_matrix
 
 

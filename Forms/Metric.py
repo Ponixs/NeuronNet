@@ -1,63 +1,62 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from tkinter import Tk, Frame, Button
+from tkinter import Tk
 import matplotlib.backends.backend_tkagg
 
 
-class PlotApp:
-    def __init__(self, master, data):
+class MetricWindow:
+    def __init__(self, master, file_named):
         self.master = master
+        file_path = f'Files/metrics/{file_named}.csv'
+        data = pd.read_csv(file_path, sep=';', header=None,
+                           names=['loss', 'accuracy', 'precision', 'recall'])
+
         self.data = data
 
-        # Create a button to display the plots
-        self.button = Button(master, text="Plot Graphs", command=self.show_plots)
-        self.button.pack()
+        # Immediately display the plots upon initializing the class
+        self.show_plots()
 
     def show_plots(self):
         # Create a new window for the plots
         plot_window = Tk()
-        plot_window.title("Graphs")
+        plot_window.title("Metrics Graphs")
 
-        # Plot the graphs based on the data
-        epochs = self.data.index
+        # Create a figure for the plots
+        fig, axs = plt.subplots(4, 1, figsize=(8, 12))  # 4 rows, 1 column
 
         # Loss
-        plt.subplot(221)
-        plt.plot(epochs, self.data['loss'], label='Loss', color='blue')
-        plt.title('Loss')
-        plt.xlabel('Epochs')
-        plt.ylabel('Value')
-        plt.grid()
+        axs[0].plot(self.data.index, self.data['loss'], label='Loss', color='blue')
+        axs[0].set_title('Loss')
+        axs[0].set_xlabel('Epochs')
+        axs[0].set_ylabel('Value')
+        axs[0].grid()
 
         # Accuracy
-        plt.subplot(222)
-        plt.plot(epochs, self.data['accuracy'], label='Accuracy', color='green')
-        plt.title('Accuracy')
-        plt.xlabel('Epochs')
-        plt.ylabel('Value')
-        plt.grid()
+        axs[1].plot(self.data.index, self.data['accuracy'], label='Accuracy', color='green')
+        axs[1].set_title('Accuracy')
+        axs[1].set_xlabel('Epochs')
+        axs[1].set_ylabel('Value')
+        axs[1].grid()
 
         # Precision
-        plt.subplot(223)
-        plt.plot(epochs, self.data['precision'], label='Precision', color='orange')
-        plt.title('Precision')
-        plt.xlabel('Epochs')
-        plt.ylabel('Value')
-        plt.grid()
+        axs[2].plot(self.data.index, self.data['precision'], label='Precision', color='orange')
+        axs[2].set_title('Precision')
+        axs[2].set_xlabel('Epochs')
+        axs[2].set_ylabel('Value')
+        axs[2].grid()
 
         # Recall
-        plt.subplot(224)
-        plt.plot(epochs, self.data['recall'], label='Recall', color='red')
-        plt.title('Recall')
-        plt.xlabel('Epochs')
-        plt.ylabel('Value')
-        plt.grid()
+        axs[3].plot(self.data.index, self.data['recall'], label='Recall', color='red')
+        axs[3].set_title('Recall')
+        axs[3].set_xlabel('Epochs')
+        axs[3].set_ylabel('Value')
+        axs[3].grid()
 
-        # Adjust layout of the plots
+        # Adjust layout
         plt.tight_layout()
 
         # Embed the plots in Tkinter
-        canvas = matplotlib.backends.backend_tkagg.FigureCanvasTkAgg(plt.gcf(), master=plot_window)
+        canvas = matplotlib.backends.backend_tkagg.FigureCanvasTkAgg(fig, master=plot_window)
         canvas.get_tk_widget().pack()
         canvas.draw()
 
@@ -65,16 +64,16 @@ class PlotApp:
 
 
 def main():
-    # Read data from CSV file
+    # Read data from the CSV file
     file_name = 'data.csv'  # Specify the name of your CSV file
     data = pd.read_csv(file_name, sep=',', header=None, names=['loss', 'accuracy', 'precision', 'recall'])
 
-    # Create the main Tkinter window
+    # Create the main Tkinter window and display plots
     root = Tk()
-    root.title("Graphs from CSV")
+    root.title("Metrics from CSV")
 
-    app = PlotApp(root, data)
-    root.mainloop()
+    # Instantiate the MetricWindow class
+    app = MetricWindow(root, data)
 
 
 if __name__ == '__main__':
