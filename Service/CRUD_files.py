@@ -8,6 +8,20 @@ load_dotenv()
 path_scales = os.getenv('path_scales')
 
 
+def read_one_img_to_matrix(file_path, delimiter=';'):
+    with open(file_path, 'r') as file:
+        # Read lines, split by delimiter, and convert to float
+        lines = file.readlines()
+        arr = []
+        for line in lines:
+            # Split line into values and ignore comments
+            values = line.split(delimiter)
+
+            arr.append([float(value) for value in values])
+
+        matrix = pd.DataFrame(arr)
+        return matrix
+
 def read_img_to_matrix(file_path, delimiter=';'):
     with open(file_path, 'r') as file:
         # Read lines, split by delimiter, and convert to float

@@ -28,7 +28,7 @@ def validation(epochs=1):
 
                 layer_matrices = img_matrix[0].iloc[i]
                 end_y, layer_matrices = neuron_net(layer_matrices, scales_index)
-                print(f"Result{i} for {img_matrix[1][i]}:\n{end_y}")
+                # print(f"Result {i} for class {img_matrix[1][i][0] - 1}:\n{end_y}")
 
                 true_answer = img_matrix[1][i][0] - 1
 
